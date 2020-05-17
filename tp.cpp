@@ -3,12 +3,13 @@
 #include <thread>
 #include <fstream>
 #include "workers_parser.h"
+#include "thread.h"
 
 #define PARAMS_AMOUNT 3
 #define ERROR 1
 #define SUCCESS 0
-#define MAP 1
-#define WORKERS 2
+#define WORKERS 1
+#define MAP 2
 
 int main(int argc, const char *argv[]) {
 
@@ -29,9 +30,9 @@ int main(int argc, const char *argv[]) {
     	return ERROR;
     }
 
-	WorkersParser workers_parser(argv[1]);
-    workers_parser.read_and_create_workers();
-
-
+	WorkersParser workers_parser(argv[WORKERS]);
+    std::vector<Thread*> collectors;
+    std::vector<Thread*> producers;
+    workers_parser.create_workers(collectors, producers);
 	return SUCCESS;
 }

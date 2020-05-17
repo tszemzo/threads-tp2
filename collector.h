@@ -7,8 +7,8 @@
 #include "thread.h"
 
 
-/*Clase que representa a una memoria cache directa. Hereda de la clase
-Cache.*/
+/*Clase que representa a recolector que va a funcionar como un hilo de ejecucion.
+ Hereda de Thread por esta misma razon.*/
 class Collector: public Thread{
 	private:
         std::string type;
