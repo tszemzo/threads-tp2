@@ -3,13 +3,15 @@
 #include <thread>
 #include <fstream>
 #include "workers_parser.h"
+#include "map_parser.h"
 #include "thread.h"
+#include "blocking_queue.h"
 
 #define PARAMS_AMOUNT 3
 #define ERROR 1
 #define SUCCESS 0
-#define WORKERS 1
-#define MAP 2
+#define WORKERS_FILE 1
+#define MAP_FILE 2
 
 int main(int argc, const char *argv[]) {
 
@@ -30,9 +32,34 @@ int main(int argc, const char *argv[]) {
     	return ERROR;
     }
 
-	WorkersParser workers_parser(argv[WORKERS]);
+	WorkersParser workers_parser(argv[WORKERS_FILE]);
+    MapParser map_parser(argv[MAP_FILE]);
     std::vector<Thread*> collectors;
     std::vector<Thread*> producers;
     workers_parser.create_workers(collectors, producers);
+
+    for (unsigned int i = 0; i < collectors.size(); ++i) {
+        std::cout << "Collector " << i << " running" << "\n";
+        collectors[i]->run();
+    }
+
+    for (unsigned int i = 0; i < producers.size(); ++i) {
+        std::cout << "Producer " << i << " running" << "\n";
+        producers[i]->run();
+    }
+
+    BlockingQueue<char> farmers_queue;
+    BlockingQueue<char> miners_queue;
+    BlockingQueue<char> woodcutters_queue;
+    map_parser.fill_queues(farmers_queue, miners_queue, woodcutters_queue);
+
+    std::cout << "Farmers queue " << farmers_queue.size() << "\n";
+    std::cout << "Miners queue " << miners_queue.size() << "\n";
+    std::cout << "Woodcutters queue " << woodcutters_queue.size() << "\n";
+
+    // for (int i = 0; i < N/2; ++i) {
+    //     threads[i]->join();
+    //     delete threads[i];
+    // }
 	return SUCCESS;
 }

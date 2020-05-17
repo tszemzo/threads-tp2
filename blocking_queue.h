@@ -25,11 +25,11 @@ public:
     }
 
     T pop() {
-        std::unique_lock<std::mutex> lock(this->m);
+        std::unique_lock<std::mutex> lk(m);
 
         while (queue.empty()) {
             if (isClosed) {
-                std::cout << 'La cola esta cerrada';
+                std::cout << "La cola esta cerrada";
                 // Aca mete la excepcion
                 return;
             }

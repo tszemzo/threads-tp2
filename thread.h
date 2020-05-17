@@ -39,7 +39,6 @@ class Thread {
          /* Método virtual que debe definirse en las clases que hereden de esta.
           * Representa la tarea a realizarse en la ejecución del hilo. */
         virtual void run() = 0;
-        
         virtual ~Thread() {};
 };
 

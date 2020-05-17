@@ -18,10 +18,10 @@ public:
     (se usa char *file para ello) como atributo.*/
     WorkersParser(const char* filename);
 
-    /*Crea los trabajadores parseados.*/
-    void create_workers(std::vector<Thread*> collectors, std::vector<Thread*> producers);
+    /*Crea los trabajadores y los agrega al vector de colectores/productores respectivamente.*/
+    void create_workers(std::vector<Thread*> &collectors, std::vector<Thread*> &producers);
 
-    /*Parsea una linea del archivo.*/
+    /*Parsea las lineas del archivo a un mapa con cada worker y su cantidad.*/
     std::map<std::string, int> map_line();
 
     /*Devuelve verdadero si es recolector, falso sino.*/

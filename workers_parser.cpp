@@ -10,12 +10,11 @@
 WorkersParser::WorkersParser(const char *filename) {
 	workers_file.open(filename, std::fstream::in);
 	if (!workers_file.is_open()) {
-		std::cerr << filename << ": Couldn't open the file."
-		<< std::endl;
+		std::cerr << filename << ": Couldn't open the file." << std::endl;
 	}
 }
 
-void WorkersParser::create_workers(std::vector<Thread*> collectors, std::vector<Thread*> producers) {
+void WorkersParser::create_workers(std::vector<Thread*> &collectors, std::vector<Thread*> &producers) {
     
     std::map<std::string, int> map_of_workers = this->map_line();
     std::map<std::string, int>::iterator it = map_of_workers.begin();
@@ -40,7 +39,6 @@ void WorkersParser::create_workers(std::vector<Thread*> collectors, std::vector<
         std::cout<< it->first <<" : "<< it->second <<std::endl;
         it++;
     }
-    
 }
 
 std::map<std::string, int> WorkersParser::map_line() {
