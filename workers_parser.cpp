@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <iterator>
+#include <vector>
 #include <mutex>
 #include "workers_parser.h"
 #include "collector.h"
@@ -14,8 +15,8 @@ WorkersParser::WorkersParser(const char *filename) {
 	}
 }
 
-void WorkersParser::create_workers(std::vector<Thread*> &collectors, std::vector<Thread*> &producers) {
-    
+void WorkersParser::create_workers(std::vector<Thread*> &collectors, 
+    std::vector<Thread*> &producers) {
     std::map<std::string, int> map_of_workers = this->map_line();
     std::map<std::string, int>::iterator it = map_of_workers.begin();
     std::mutex m;
@@ -28,8 +29,7 @@ void WorkersParser::create_workers(std::vector<Thread*> &collectors, std::vector
                 Collector *collector = new Collector(worker_role, m);
                 collectors.push_back(collector);
                 std::cout<< "Collector created" <<std::endl;
-            }
-            else{
+            } else {
                 Producer *producer = new Producer(worker_role, m);
                 producers.push_back(producer);
                 std::cout<< "Producer created" <<std::endl;
@@ -42,13 +42,12 @@ void WorkersParser::create_workers(std::vector<Thread*> &collectors, std::vector
 }
 
 std::map<std::string, int> WorkersParser::map_line() {
-
     std::map<std::string, int> map_of_workers;
     std::string line;
     std::string delimiter = "=";
     int start_of_word = 0;
 
-    while(!workers_file.eof()) {
+    while (!workers_file.eof()) {
         start_of_word = 0;
         std::getline(workers_file, line, '\n');
         if (line.length() <= 0) break;

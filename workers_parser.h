@@ -5,6 +5,7 @@
 #include <fstream>
 #include <map>
 #include <vector>
+#include <string>
 #include "thread.h"
 
 /*Clase que lee el archivo de trabajadores cuando se inicia el programa.*/
@@ -16,10 +17,12 @@ private:
 public:
     /*Crea el lector asignandole el archivo abierto 
     (se usa char *file para ello) como atributo.*/
-    WorkersParser(const char* filename);
+    explicit WorkersParser(const char* filename);
 
-    /*Crea los trabajadores y los agrega al vector de colectores/productores respectivamente.*/
-    void create_workers(std::vector<Thread*> &collectors, std::vector<Thread*> &producers);
+    /*Crea los trabajadores y los agrega al vector de colectores/productores 
+    respectivamente.*/
+    void create_workers(std::vector<Thread*> &collectors, 
+        std::vector<Thread*> &producers);
 
     /*Parsea las lineas del archivo a un mapa con cada worker y su cantidad.*/
     std::map<std::string, int> map_line();

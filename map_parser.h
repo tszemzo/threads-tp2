@@ -14,7 +14,7 @@ private:
 public:
     /*Crea el lector asignandole el archivo abierto 
     (se usa char *file para ello) como atributo.*/
-    MapParser(const char* filename);
+    explicit MapParser(const char* filename);
 
      /*Llena las colas bloqueantes con los recursos obtenidos del archivo.*/
     void fill_queues(BlockingQueue<char> &farmers_queue, 

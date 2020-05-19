@@ -13,7 +13,6 @@ MapParser::MapParser(const char *filename) {
 void MapParser::fill_queues(BlockingQueue<char> &farmers_queue, 
                             BlockingQueue<char> &miners_queue,
                             BlockingQueue<char> &woodcutters_queue) {
-    
     std::string line;
     char delimiter{ '\n' };
     char wheat{ 'T' };
@@ -21,14 +20,16 @@ void MapParser::fill_queues(BlockingQueue<char> &farmers_queue,
     char coal{ 'C' };
     char iron{ 'H' };
 
-    while(!map_file.eof()) {
+    while (!map_file.eof()) {
         std::getline(map_file, line, delimiter);
         if (line.length() <= 0) break;
         for (unsigned int i = 0; i < line.length(); i++) {
             char resource = line[i];
             if (resource == wheat) farmers_queue.push(resource);
             if (resource == woods) woodcutters_queue.push(resource);
-            if (resource == coal || resource == iron) miners_queue.push(resource);
+            if (resource == coal || resource == iron) {
+                miners_queue.push(resource);
+            }
         }  
 	}
 }

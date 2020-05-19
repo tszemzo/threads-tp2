@@ -9,7 +9,7 @@ class Thread {
         std::thread thread;
  
     public:
-        Thread () {}
+        Thread() {}
 
         // No copiable.
         Thread(const Thread&) = delete;
@@ -39,7 +39,7 @@ class Thread {
          /* Método virtual que debe definirse en las clases que hereden de esta.
           * Representa la tarea a realizarse en la ejecución del hilo. */
         virtual void run() = 0;
-        virtual ~Thread() {};
+        virtual ~Thread() {}
 };
 
 #endif
