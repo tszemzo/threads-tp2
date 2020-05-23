@@ -5,7 +5,6 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
-
 // Template de una cola bloqueante, la cual bloquea la actividad del thread en
 // el pop en el caso que la cola esté vacía, utilizando conditional variables.
 template <typename T> class BlockingQueue {
@@ -29,9 +28,7 @@ public:
 
         while (queue.empty()) {
             if (isClosed) {
-                std::cout << "La cola esta cerrada";
-                // Aca mete la excepcion
-                return;
+                throw "Queue is closed";
             }
             
             cv.wait(lk);

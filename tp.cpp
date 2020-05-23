@@ -5,7 +5,10 @@
 #include "workers_parser.h"
 #include "map_parser.h"
 #include "thread.h"
+#include "collector.h"
+#include "producer.h"
 #include "blocking_queue.h"
+#include "inventory.h"
 
 #define PARAMS_AMOUNT 3
 #define ERROR 1
@@ -32,23 +35,15 @@ int main(int argc, const char *argv[]) {
 
 	WorkersParser workers_parser(argv[WORKERS_FILE]);
     MapParser map_parser(argv[MAP_FILE]);
-    std::vector<Thread*> collectors;
-    std::vector<Thread*> producers;
+    BlockingQueue<char> farmers_queue, miners_queue, woodcutters_queue;
+    std::vector<Collector*> collectors;
+    std::vector<Producer*> producers;
+    Inventory inventory;
     workers_parser.create_workers(collectors, producers);
+    workers_parser.run_collectors(collectors, farmers_queue, miners_queue,
+        woodcutters_queue, inventory);
+    workers_parser.run_producers(producers, inventory);
 
-    for (unsigned int i = 0; i < collectors.size(); ++i) {
-        std::cout << "Collector " << i << " running" << "\n";
-        collectors[i]->run();
-    }
-
-    for (unsigned int i = 0; i < producers.size(); ++i) {
-        std::cout << "Producer " << i << " running" << "\n";
-        producers[i]->run();
-    }
-
-    BlockingQueue<char> farmers_queue;
-    BlockingQueue<char> miners_queue;
-    BlockingQueue<char> woodcutters_queue;
     map_parser.fill_queues(farmers_queue, miners_queue, woodcutters_queue);
 
     std::cout << "Farmers queue " << farmers_queue.size() << "\n";

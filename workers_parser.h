@@ -7,6 +7,10 @@
 #include <vector>
 #include <string>
 #include "thread.h"
+#include "blocking_queue.h"
+#include "collector.h"
+#include "producer.h"
+#include "inventory.h"
 
 /*Clase que lee el archivo de trabajadores cuando se inicia el programa.*/
 class WorkersParser {
@@ -21,8 +25,19 @@ public:
 
     /*Crea los trabajadores y los agrega al vector de colectores/productores 
     respectivamente.*/
-    void create_workers(std::vector<Thread*> &collectors, 
-        std::vector<Thread*> &producers);
+    void create_workers(std::vector<Collector*> &collectors, 
+        std::vector<Producer*> &producers);
+
+    /*.*/
+    void run_collectors(std::vector<Collector*> &collectors, 
+        BlockingQueue<char> &farmers_queue,
+        BlockingQueue<char> &miners_queue, 
+        BlockingQueue<char> &woodcutters_queue,
+        Inventory &inventory);
+
+    /*.*/
+    void run_producers(std::vector<Producer*> &producers,
+        Inventory &inventory);
 
     /*Parsea las lineas del archivo a un mapa con cada worker y su cantidad.*/
     std::map<std::string, int> map_line();
