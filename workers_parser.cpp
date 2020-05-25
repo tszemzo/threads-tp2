@@ -40,7 +40,7 @@ void WorkersParser::create_workers(std::vector<Collector*> &collectors,
 std::map<std::string, int> WorkersParser::map_line() {
     std::map<std::string, int> map_of_workers;
     std::string line;
-    std::string delimiter = "=";
+    std::string delimiter = "="; // no es necesario
     int start_of_word = 0;
 
     while (!workers_file.eof()) {
@@ -84,6 +84,7 @@ void WorkersParser::run_producers(std::vector<Producer*> &producers,
 }
 
 bool WorkersParser::is_collector(std::string worker_role) {
+    // usar std::string & 
     return worker_role.compare("Agricultores") == 0 || 
            worker_role.compare("Leniadores") == 0 || 
            worker_role.compare("Mineros") == 0;
