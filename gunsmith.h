@@ -22,6 +22,8 @@ class Gunsmith {
 
 		void operator()();
 
+		void produce();
+
 		/*Destructor virtual de la clase.*/
 		~Gunsmith();
 };

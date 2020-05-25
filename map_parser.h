@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include "blocking_queue.h"
+#include "inventory.h"
 
 /*Clase que lee el archivo del mapa cuando se inicia el programa.*/
 class MapParser {
@@ -19,7 +20,8 @@ public:
      /*Llena las colas bloqueantes con los recursos obtenidos del archivo.*/
     void fill_queues(BlockingQueue &farmers_queue, 
                      BlockingQueue &miners_queue,
-                     BlockingQueue &woodcutters_queue);
+                     BlockingQueue &woodcutters_queue,
+                     Inventory &inventory);
 
     /*Destructor del objeto. Cierra el archivo que tiene como atributo.*/
     ~MapParser();

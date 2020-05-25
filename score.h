@@ -2,6 +2,7 @@
 #define SCORE_H
 
 #include <mutex>
+#include <iostream>
 
 /*Clase que lee el archivo del mapa cuando se inicia el programa.*/
 class Score {
@@ -15,6 +16,8 @@ public:
     Score();
 
     bool add(int points);
+
+    void print_score();
 
     /*Destructor del objeto.*/
     ~Score();

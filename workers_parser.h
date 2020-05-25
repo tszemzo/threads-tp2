@@ -36,8 +36,9 @@ public:
         Inventory &inventory,
         Score &score);
 
-    void join_workers(std::vector<std::thread> &collectors,
-        std::vector<std::thread> &producers);
+    void join_collectors(std::vector<std::thread> &collectors);
+
+    void join_producers(std::vector<std::thread> &producers);
 
     /*Parsea las lineas del archivo a un mapa con cada worker y su cantidad.*/
     std::map<std::string, int> map_line();

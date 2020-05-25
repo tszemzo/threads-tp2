@@ -22,6 +22,8 @@ class Carpenter {
 
 		void operator()();
 
+		void produce();
+
 		/*Destructor virtual de la clase.*/
 		~Carpenter();
 };

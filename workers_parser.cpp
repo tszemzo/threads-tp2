@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <iterator>
 #include <vector>
 #include <mutex>
 #include <thread>
@@ -74,11 +73,13 @@ void WorkersParser::run_workers(std::vector<std::thread> &collectors,
     }
 }
 
-void WorkersParser::join_workers(std::vector<std::thread> &collectors,
-    std::vector<std::thread> &producers) {
+void WorkersParser::join_collectors(std::vector<std::thread> &collectors) {
     for (unsigned int i = 0; i < collectors.size(); ++i) {
         collectors[i].join();
     }
+}
+
+void WorkersParser::join_producers(std::vector<std::thread> &producers) {
     for (unsigned int i = 0; i < producers.size(); ++i) {
         producers[i].join();
     }

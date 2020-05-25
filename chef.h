@@ -21,6 +21,8 @@ class Chef {
 			inventory(inventory), score(score) {}
 
 		void operator()();
+
+		void produce();
 		
 		/*Destructor de la clase.*/
 		~Chef();
