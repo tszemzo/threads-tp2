@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
 
     workers_parser.run_workers(collectors, producers, farmers_queue, miners_queue, 
         woodcutters_queue, inventory, score);
-    map_parser.fill_queues(farmers_queue, miners_queue, woodcutters_queue, inventory);
+    map_parser.fill_queues(farmers_queue, miners_queue, woodcutters_queue);
     workers_parser.join_collectors(collectors);
     inventory.deactivate();
     workers_parser.join_producers(producers);
