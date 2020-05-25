@@ -1,18 +1,17 @@
 #include "collector.h"
-#include <iostream>
-#include <string>
-#include <mutex>
+#include "exceptions.h"
 
-Collector::Collector(const std::string &type, std::mutex &m) :
-	type(type), m(m) {}
-
-void Collector::run(BlockingQueue<char> &blocking_queue, Inventory &inventory) {
-	std::cout << "Collector running" << '\n';
+void Collector::operator()() {
+    std::cout << "Collector running" << '\n';
+    while (true) {
+        try {
+            char resource = queue.pop();
+            usleep(WORK_TIME);
+            inventory.add(resource);
+        } catch(ClosedQueueException) {
+            break;
+        }
+    }
 }
 
-std::string Collector::get_type() {
-	return type;
-}
-
-Collector::~Collector() {
-}
+Collector::~Collector() {}

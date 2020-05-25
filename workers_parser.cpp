@@ -4,6 +4,7 @@
 #include <iterator>
 #include <vector>
 #include <mutex>
+#include <thread>
 #include "workers_parser.h"
 
 WorkersParser::WorkersParser(const char *filename) {
@@ -13,29 +14,29 @@ WorkersParser::WorkersParser(const char *filename) {
 	}
 }
 
-void WorkersParser::create_workers(std::vector<Collector*> &collectors, 
-    std::vector<Producer*> &producers) {
-    std::map<std::string, int> map_of_workers = this->map_line();
-    std::map<std::string, int>::iterator it = map_of_workers.begin();
-    std::mutex m;
+// void WorkersParser::create_workers(std::vector<Collector*> &collectors, 
+//     std::vector<Producer*> &producers) {
+//     std::map<std::string, int> map_of_workers = this->map_line();
+//     std::map<std::string, int>::iterator it = map_of_workers.begin();
+//     std::mutex m;
     
-    while (it != map_of_workers.end()) {
-        std::string worker_role = it->first;
-        int worker_amount = it->second;
-        for (int i = 0; i < worker_amount; i++) {
-            if (this->is_collector(worker_role)){
-                Collector *collector = new Collector(worker_role, m);
-                collectors.push_back(collector);
-            } else {
-                Producer *producer = new Producer(worker_role, m);
-                producers.push_back(producer);
-            }
-        }
+//     while (it != map_of_workers.end()) {
+//         std::string worker_role = it->first;
+//         int worker_amount = it->second;
+//         for (int i = 0; i < worker_amount; i++) {
+//             if (this->is_collector(worker_role)){
+//                 Collector *collector = new Collector(worker_role, m);
+//                 collectors.push_back(collector);
+//             } else {
+//                 Producer *producer = new Producer(worker_role, m);
+//                 producers.push_back(producer);
+//             }
+//         }
         
-        std::cout<< it->first <<" : "<< it->second <<std::endl;
-        it++;
-    }
-}
+//         std::cout<< it->first <<" : "<< it->second <<std::endl;
+//         it++;
+//     }
+// }
 
 std::map<std::string, int> WorkersParser::map_line() {
     std::map<std::string, int> map_of_workers;
@@ -56,22 +57,21 @@ std::map<std::string, int> WorkersParser::map_line() {
     return map_of_workers;
 }
 
-void WorkersParser::run_collectors(std::vector<Collector*> &collectors, 
-    BlockingQueue<char> &farmers_queue,
-    BlockingQueue<char> &miners_queue, 
-    BlockingQueue<char> &woodcutters_queue,
+void WorkersParser::run_collectors(std::vector<std::thread> &collectors, 
+    BlockingQueue &farmers_queue,
+    BlockingQueue &miners_queue, 
+    BlockingQueue &woodcutters_queue,
     Inventory &inventory) {
-    for (unsigned int i = 0; i < collectors.size(); i++) {
-        Collector *current = collectors[i];
-        if (current->get_type() == "Agricultores"){
-            current->run(farmers_queue, inventory);
-        }
-        if (current->get_type() == "Leniadores"){
-            current->run(woodcutters_queue, inventory);
-        }
-        if (current->get_type() == "Mineros"){
-            current->run(miners_queue, inventory);
-        }
+    std::map<std::string, int> map_of_workers = this->map_line();
+
+    for (int i = 0; i < map_of_workers["Agricultores"]; i++) {
+        collectors.push_back(std::thread { Collector(farmers_queue, inventory) });
+    }
+    for (int i = 0; i < map_of_workers["Leniadores"]; i++) {
+        collectors.push_back(std::thread { Collector(woodcutters_queue, inventory) });
+    }
+    for (int i = 0; i < map_of_workers["Mineros"]; i++) {
+        collectors.push_back(std::thread { Collector(miners_queue, inventory) });
     }
 }
 
@@ -80,6 +80,12 @@ void WorkersParser::run_producers(std::vector<Producer*> &producers,
     for (unsigned int i = 0; i < producers.size(); i++) {
         Producer *current = producers[i];
         current->run(inventory);
+    }
+}
+
+void WorkersParser::join_collectors(std::vector<std::thread> &collectors) {
+    for (unsigned int i = 0; i < collectors.size(); ++i) {
+        collectors[i].join();
     }
 }
 

@@ -3,25 +3,25 @@
 
 #include <iostream>
 #include <string>
-#include <mutex>
+#include <unistd.h>
 #include "thread.h"
 #include "inventory.h"
 #include "blocking_queue.h"
 
-/*Clase que representa a recolector que va a funcionar como un hilo de ejecucion.
- Hereda de Thread por esta misma razon.*/
-class Collector: public Thread{
+#define WORK_TIME 50
+
+/*Clase que representa a recolector va a funcionar como un hilo de ejecucion*/
+class Collector {
 	private:
-        std::string type;
-        std::mutex &m;
+		BlockingQueue &queue;
+		Inventory &inventory;
 
 	public:
 		/*Constructor de la clase.*/
-		Collector(const std::string &type, std::mutex &m);
+		Collector(BlockingQueue &queue, Inventory &inventory) : 
+            queue(queue), inventory(inventory) {};
 
-		void run(BlockingQueue<char> &farmers_queue, Inventory &inventory);
-
-		std::string get_type();
+		void operator()();
 
 		/*Destructor virtual de la clase.*/
 		~Collector();

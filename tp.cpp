@@ -35,24 +35,18 @@ int main(int argc, const char *argv[]) {
 
 	WorkersParser workers_parser(argv[WORKERS_FILE]);
     MapParser map_parser(argv[MAP_FILE]);
-    BlockingQueue<char> farmers_queue, miners_queue, woodcutters_queue;
-    std::vector<Collector*> collectors;
+    BlockingQueue farmers_queue, miners_queue, woodcutters_queue;
+    std::vector<std::thread> collectors;
     std::vector<Producer*> producers;
     Inventory inventory;
-    workers_parser.create_workers(collectors, producers);
-    workers_parser.run_collectors(collectors, farmers_queue, miners_queue,
+
+    // workers_parser.create_workers(collectors, producers);
+    workers_parser.run_collectors(collectors, farmers_queue, miners_queue, 
         woodcutters_queue, inventory);
-    workers_parser.run_producers(producers, inventory);
-
+    // workers_parser.run_producers(producers, inventory);
     map_parser.fill_queues(farmers_queue, miners_queue, woodcutters_queue);
-
-    std::cout << "Farmers queue " << farmers_queue.size() << "\n";
-    std::cout << "Miners queue " << miners_queue.size() << "\n";
-    std::cout << "Woodcutters queue " << woodcutters_queue.size() << "\n";
-
-    // for (int i = 0; i < N/2; ++i) {
-    //     threads[i]->join();
-    //     delete threads[i];
-    // }
+    workers_parser.join_collectors(collectors);
+    
+    inventory.print_map();
 	return SUCCESS;
 }

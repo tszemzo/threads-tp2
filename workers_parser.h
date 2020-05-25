@@ -5,6 +5,7 @@
 #include <fstream>
 #include <map>
 #include <vector>
+#include <thread>
 #include <string>
 #include "thread.h"
 #include "blocking_queue.h"
@@ -25,19 +26,21 @@ public:
 
     /*Crea los trabajadores y los agrega al vector de colectores/productores 
     respectivamente.*/
-    void create_workers(std::vector<Collector*> &collectors, 
-        std::vector<Producer*> &producers);
+    // void create_workers(std::vector<Collector*> &collectors, 
+    //     std::vector<Producer*> &producers);
 
     /*.*/
-    void run_collectors(std::vector<Collector*> &collectors, 
-        BlockingQueue<char> &farmers_queue,
-        BlockingQueue<char> &miners_queue, 
-        BlockingQueue<char> &woodcutters_queue,
+    void run_collectors(std::vector<std::thread> &collectors, 
+        BlockingQueue &farmers_queue,
+        BlockingQueue &miners_queue, 
+        BlockingQueue &woodcutters_queue,
         Inventory &inventory);
 
     /*.*/
     void run_producers(std::vector<Producer*> &producers,
         Inventory &inventory);
+
+    void join_collectors(std::vector<std::thread> &collectors);
 
     /*Parsea las lineas del archivo a un mapa con cada worker y su cantidad.*/
     std::map<std::string, int> map_line();

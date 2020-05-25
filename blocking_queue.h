@@ -5,49 +5,26 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
-// Template de una cola bloqueante, la cual bloquea la actividad del thread en
+
+// Clase de la cola bloqueante, la cual bloquea la actividad del thread en
 // el pop en el caso que la cola esté vacía, utilizando conditional variables.
-template <typename T> class BlockingQueue {
+class BlockingQueue {
 private:
     bool isClosed;
     std::mutex m;
     std::condition_variable cv;
-    std::queue<T> queue;
+    std::queue<char> queue;
 
 public:
     BlockingQueue(): isClosed(false) {}
 
-    void push(T value) {
-        std::unique_lock<std::mutex> lk(m);
-        queue.push(value);
-        cv.notify_all();
-    }
+    void push(char value);
 
-    T pop() {
-        std::unique_lock<std::mutex> lk(m);
+    char pop();
 
-        while (queue.empty()) {
-            if (isClosed) {
-                throw "Queue is closed";
-            }
-            
-            cv.wait(lk);
-        }
-        
-        T t = queue.front();
-        queue.pop();
-        return t;
-    }
+    size_t size();
 
-    size_t size(){
-        return queue.size();
-    }
-
-    void close() {
-        std::unique_lock<std::mutex> lk(m);
-        isClosed = true;
-        cv.notify_all();
-    }
+    void close();
 
     ~BlockingQueue() {}
 };

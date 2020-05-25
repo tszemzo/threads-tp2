@@ -10,9 +10,9 @@ MapParser::MapParser(const char *filename) {
 	}
 }
 
-void MapParser::fill_queues(BlockingQueue<char> &farmers_queue, 
-                            BlockingQueue<char> &miners_queue,
-                            BlockingQueue<char> &woodcutters_queue) {
+void MapParser::fill_queues(BlockingQueue &farmers_queue, 
+                            BlockingQueue &miners_queue,
+                            BlockingQueue &woodcutters_queue) {
     std::string line;
     char delimiter{ '\n' };
     char wheat{ 'T' };
@@ -32,6 +32,9 @@ void MapParser::fill_queues(BlockingQueue<char> &farmers_queue,
             }
         }  
 	}
+    farmers_queue.close();
+    woodcutters_queue.close();
+    miners_queue.close();
 }
 
 MapParser::~MapParser() {

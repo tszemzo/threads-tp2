@@ -17,9 +17,9 @@ public:
     explicit MapParser(const char* filename);
 
      /*Llena las colas bloqueantes con los recursos obtenidos del archivo.*/
-    void fill_queues(BlockingQueue<char> &farmers_queue, 
-                     BlockingQueue<char> &miners_queue,
-                     BlockingQueue<char> &woodcutters_queue);
+    void fill_queues(BlockingQueue &farmers_queue, 
+                     BlockingQueue &miners_queue,
+                     BlockingQueue &woodcutters_queue);
 
     /*Destructor del objeto. Cierra el archivo que tiene como atributo.*/
     ~MapParser();
