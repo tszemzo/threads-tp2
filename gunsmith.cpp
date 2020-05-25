@@ -10,7 +10,7 @@
 #define BENEFIT_POINTS 3
 
 void Gunsmith::operator()() {
-    std::cout << "Gunsmith running" << '\n';
+    // std::cout << "Gunsmith running" << '\n';
     while (true) {
         try {
             this->produce();

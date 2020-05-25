@@ -11,7 +11,7 @@ bool Score::add(int points) {
 }
 
 void Score::print_score() {
-    std::cout << "Puntos de beneficio: " << score << '\n';
+    std::cout << "Puntos de Beneficio acumulados: " << score << '\n';
 }
 
 Score::~Score() {}

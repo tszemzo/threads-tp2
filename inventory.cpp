@@ -2,6 +2,7 @@
 #include "exceptions.h"
 #include <string>
 #include <iostream>
+#include <map>
 
 bool Inventory::add(char resource) {
     std::unique_lock<std::mutex> lk(m);
@@ -40,10 +41,10 @@ bool Inventory::has_resources(std::map<char, int> &recipe) {
             can_remove = false;
             break;
         }
-        std::cout<< resource << ": [Needed] " << amount_needed <<std::endl;
+        // std::cout<< resource << ": [Needed] " << amount_needed <<std::endl;
         it++;
     }
-    std::cout<< "Can remove? "<< can_remove << std::endl;
+    // std::cout<< "Can remove? "<< can_remove << std::endl;
     return can_remove;
 }
 
@@ -56,7 +57,7 @@ void Inventory::consume_resources(std::map<char, int> &recipe) {
         resources[resource] -= amount_needed;
         it++;
     }
-    std::cout<< "Resources removed " << std::endl;
+    // std::cout<< "Resources removed " << std::endl;
 }
 
 
@@ -67,10 +68,12 @@ void Inventory::deactivate() {
 }
 
 void Inventory::print_map() {
-    std::cout << "Madera added: " << resources['M'] << '\n';
-    std::cout << "Hierro added: " << resources['H'] << '\n';
-    std::cout << "Trigo added: " << resources['T'] << '\n';
-    std::cout << "Carbon added: " << resources['C'] << '\n';
+    std::cout << "Recursos restantes:" << '\n';
+    std::cout << "  - Trigo: " << resources['T'] << '\n';
+    std::cout << "  - Madera: " << resources['M'] << '\n';
+    std::cout << "  - Carbon: " << resources['C'] << '\n';
+    std::cout << "  - Hierro: " << resources['H'] << '\n';
+    std::cout << '\n';
 }
 
 Inventory::~Inventory() {

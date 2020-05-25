@@ -10,7 +10,7 @@
 #define BENEFIT_POINTS 5
 
 void Chef::operator()() {
-    std::cout << "Chef running" << '\n';
+    // std::cout << "Chef running" << '\n';
     while (true) {
         try {
             this->produce();

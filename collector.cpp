@@ -2,7 +2,7 @@
 #include "exceptions.h"
 
 void Collector::operator()() {
-    std::cout << "Collector running" << '\n';
+    // std::cout << "Collector running" << '\n';
     while (true) {
         try {
             char resource = queue.pop();

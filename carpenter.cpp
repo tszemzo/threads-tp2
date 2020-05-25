@@ -10,7 +10,7 @@
 #define BENEFIT_POINTS 2
 
 void Carpenter::operator()() {
-    std::cout << "C rarpenterunning" << '\n';
+    // std::cout << "Carpenter running" << '\n';
     while (true) {
         try {
             this->produce();
