@@ -13,6 +13,8 @@
 class Collector: public Thread{
 	private:
         std::string type;
+        // el thread no debe tener el mutex, 
+        //la cola bloqueante es la que lo instancia como un atributo de la clase
         std::mutex &m;
 
 	public:

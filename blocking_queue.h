@@ -22,7 +22,7 @@ public:
         queue.push(value);
         cv.notify_all();
     }
-
+    // T& pop
     T pop() {
         std::unique_lock<std::mutex> lk(m);
 
@@ -34,12 +34,15 @@ public:
             cv.wait(lk);
         }
         
+        // no hacer copias, usar move
         T t = queue.front();
         queue.pop();
+        // falta el notify
         return t;
     }
 
     size_t size(){
+        // usar funcion atomica
         return queue.size();
     }
 

@@ -33,6 +33,13 @@ int main(int argc, const char *argv[]) {
     	return ERROR;
     }
 
+    // por cada thread, crearlo encolarlo en el vector
+    // y hacer un start()
+    // cuando todos esten encolados y corriendo 
+    // hacer el join y delete
+    // no dejar logica de negocio dentro del main
+
+
 	WorkersParser workers_parser(argv[WORKERS_FILE]);
     MapParser map_parser(argv[MAP_FILE]);
     BlockingQueue<char> farmers_queue, miners_queue, woodcutters_queue;
