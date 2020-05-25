@@ -37,9 +37,6 @@ class Thread {
         /* Indica si se le puede realizar un join al hilo */
         bool joinable();
 
-        /* Indica si se le puede realizar un join al hilo */
-        std::string get_type();
-
          /* Método virtual que debe definirse en las clases que hereden de esta.
           * Representa la tarea a realizarse en la ejecución del hilo. */
         void run();

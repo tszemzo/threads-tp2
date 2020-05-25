@@ -1,27 +1,29 @@
-#ifndef PRODUCER_H
-#define PRODUCER_H
+#ifndef GUNSMITH_H
+#define GUNSMITH_H
 
 #include <iostream>
 #include <string>
 #include <mutex>
 #include "thread.h"
 #include "inventory.h"
+#include "score.h"
 
 /*Clase que representa a una memoria cache directa. Hereda de la clase
 Cache.*/
-class Producer: public Thread{
+class Gunsmith {
 	private:
-        std::string type;
-        std::mutex &m;
+		Inventory &inventory;
+		Score &score;
 
 	public:
 		/*Constructor de la clase.*/
-		Producer(const std::string &type, std::mutex &m);
+		Gunsmith(Inventory &inventory, Score &score) : 
+			inventory(inventory), score(score) {}
 
-		void run(Inventory &inventory);
+		void operator()();
 
 		/*Destructor virtual de la clase.*/
-		virtual ~Producer();
+		~Gunsmith();
 };
 
 #endif 

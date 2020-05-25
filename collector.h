@@ -19,7 +19,7 @@ class Collector {
 	public:
 		/*Constructor de la clase.*/
 		Collector(BlockingQueue &queue, Inventory &inventory) : 
-            queue(queue), inventory(inventory) {};
+            queue(queue), inventory(inventory) {}
 
 		void operator()();
 

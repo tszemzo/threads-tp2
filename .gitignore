@@ -1,0 +1,8 @@
+*.o
+*.py
+Makefile
+*.pdf
+.vscode/
+*.txt
+filter_options
+tp

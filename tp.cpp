@@ -6,9 +6,9 @@
 #include "map_parser.h"
 #include "thread.h"
 #include "collector.h"
-#include "producer.h"
 #include "blocking_queue.h"
 #include "inventory.h"
+#include "score.h"
 
 #define PARAMS_AMOUNT 3
 #define ERROR 1
@@ -36,16 +36,14 @@ int main(int argc, const char *argv[]) {
 	WorkersParser workers_parser(argv[WORKERS_FILE]);
     MapParser map_parser(argv[MAP_FILE]);
     BlockingQueue farmers_queue, miners_queue, woodcutters_queue;
-    std::vector<std::thread> collectors;
-    std::vector<Producer*> producers;
+    std::vector<std::thread> collectors, producers;
     Inventory inventory;
+    Score score;
 
-    // workers_parser.create_workers(collectors, producers);
-    workers_parser.run_collectors(collectors, farmers_queue, miners_queue, 
-        woodcutters_queue, inventory);
-    // workers_parser.run_producers(producers, inventory);
+    workers_parser.run_workers(collectors, producers, farmers_queue, miners_queue, 
+        woodcutters_queue, inventory, score);
     map_parser.fill_queues(farmers_queue, miners_queue, woodcutters_queue);
-    workers_parser.join_collectors(collectors);
+    workers_parser.join_workers(collectors, producers);
     
     inventory.print_map();
 	return SUCCESS;
