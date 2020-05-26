@@ -19,7 +19,7 @@ class Chef : public ProducerThread {
 		Chef(Inventory &inventory, Score &score) : 
 			inventory(inventory), score(score) {}
 
-		void operator()();
+		void run() override;
 
 		void produce();
 		

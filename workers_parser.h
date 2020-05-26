@@ -7,7 +7,7 @@
 #include <vector>
 #include <thread>
 #include <string>
-#include "thread.h"
+#include "producer_thread.h"
 #include "blocking_queue.h"
 #include "collector.h"
 #include "chef.h"
@@ -29,7 +29,7 @@ public:
 
     /*.*/
     void run_workers(std::vector<std::thread> &collectors,
-        std::vector<std::thread> &producers, 
+        std::vector<ProducerThread*> &producers, 
         BlockingQueue &farmers_queue,
         BlockingQueue &miners_queue, 
         BlockingQueue &woodcutters_queue,
@@ -38,16 +38,10 @@ public:
 
     void join_collectors(std::vector<std::thread> &collectors);
 
-    void join_producers(std::vector<std::thread> &producers);
+    void join_producers(std::vector<ProducerThread*> &producers);
 
     /*Parsea las lineas del archivo a un mapa con cada worker y su cantidad.*/
     std::map<std::string, int> map_line();
-
-    /*Devuelve verdadero si es recolector, falso sino.*/
-    bool is_collector(std::string worker_role);
-
-    /*Devuelve verdadero si es productor, falso sino.*/
-    bool is_producer(std::string worker_role);
 
     /*Destructor del objeto. Cierra el archivo que tiene como atributo.*/
     ~WorkersParser();

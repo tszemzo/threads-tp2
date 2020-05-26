@@ -19,7 +19,7 @@ class Carpenter : public ProducerThread {
 		Carpenter(Inventory &inventory, Score &score) : 
 			inventory(inventory), score(score) {}
 
-		void operator()();
+		void run() override;
 
 		void produce();
 

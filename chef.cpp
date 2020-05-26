@@ -7,10 +7,11 @@
 #define WORK_TIME 60
 #define WHEAT_AMOUNT 2
 #define COAL_AMOUNT 1
+#define WHEAT 'T'
+#define COAL 'C'
 #define BENEFIT_POINTS 5
 
-void Chef::operator()() {
-    // std::cout << "Chef running" << '\n';
+void Chef::run() {
     while (true) {
         try {
             this->produce();
@@ -23,8 +24,8 @@ void Chef::operator()() {
 
 void Chef::produce() {
     std::map<char, int> recipe;
-    recipe['T'] = WHEAT_AMOUNT;
-    recipe['C'] = COAL_AMOUNT;
+    recipe[WHEAT] = WHEAT_AMOUNT;
+    recipe[COAL] = COAL_AMOUNT;
     inventory.remove(recipe);
     score.add(BENEFIT_POINTS);
 }

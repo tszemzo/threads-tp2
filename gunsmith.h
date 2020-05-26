@@ -9,7 +9,7 @@
 #include "score.h"
 
 /*Clase que representa a un armero.*/
-class Gunsmith : ProductorThread {
+class Gunsmith : public ProducerThread {
 	private:
 		Inventory &inventory;
 		Score &score;
@@ -19,7 +19,7 @@ class Gunsmith : ProductorThread {
 		Gunsmith(Inventory &inventory, Score &score) : 
 			inventory(inventory), score(score) {}
 
-		void operator()();
+		void run() override;
 
 		void produce();
 

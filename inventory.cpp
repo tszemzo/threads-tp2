@@ -4,6 +4,11 @@
 #include <iostream>
 #include <map>
 
+#define WHEAT 'T'
+#define WOODS 'M'
+#define COAL 'C'
+#define IRON 'H'
+
 bool Inventory::add(char resource) {
     std::unique_lock<std::mutex> lk(m);
     if (resources.find(resource) == resources.end()) {
@@ -41,10 +46,8 @@ bool Inventory::has_resources(std::map<char, int> &recipe) {
             can_remove = false;
             break;
         }
-        // std::cout<< resource << ": [Needed] " << amount_needed <<std::endl;
         it++;
     }
-    // std::cout<< "Can remove? "<< can_remove << std::endl;
     return can_remove;
 }
 
@@ -57,7 +60,6 @@ void Inventory::consume_resources(std::map<char, int> &recipe) {
         resources[resource] -= amount_needed;
         it++;
     }
-    // std::cout<< "Resources removed " << std::endl;
 }
 
 
@@ -69,10 +71,10 @@ void Inventory::deactivate() {
 
 void Inventory::print_map() {
     std::cout << "Recursos restantes:" << '\n';
-    std::cout << "  - Trigo: " << resources['T'] << '\n';
-    std::cout << "  - Madera: " << resources['M'] << '\n';
-    std::cout << "  - Carbon: " << resources['C'] << '\n';
-    std::cout << "  - Hierro: " << resources['H'] << '\n';
+    std::cout << "  - Trigo: " << resources[WHEAT] << '\n';
+    std::cout << "  - Madera: " << resources[WOODS] << '\n';
+    std::cout << "  - Carbon: " << resources[COAL] << '\n';
+    std::cout << "  - Hierro: " << resources[IRON] << '\n';
     std::cout << '\n';
 }
 

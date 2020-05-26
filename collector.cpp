@@ -1,8 +1,9 @@
 #include "collector.h"
 #include "exceptions.h"
 
+#define WORK_TIME 50
+
 void Collector::operator()() {
-    // std::cout << "Collector running" << '\n';
     while (true) {
         try {
             char resource = queue.pop();

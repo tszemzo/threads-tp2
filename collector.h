@@ -4,11 +4,8 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
-#include "thread.h"
 #include "inventory.h"
 #include "blocking_queue.h"
-
-#define WORK_TIME 50
 
 /*Clase que representa a recolector va a funcionar como un hilo de ejecucion*/
 class Collector {

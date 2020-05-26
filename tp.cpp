@@ -1,14 +1,5 @@
 #include <iostream>
-#include <vector>
-#include <thread>
-#include <fstream>
-#include "workers_parser.h"
-#include "map_parser.h"
-#include "thread.h"
-#include "collector.h"
-#include "blocking_queue.h"
-#include "inventory.h"
-#include "score.h"
+#include "orchestrator.h"
 
 #define PARAMS_AMOUNT 3
 #define ERROR 1
@@ -17,27 +8,12 @@
 #define MAP_FILE 2
 
 int main(int argc, const char *argv[]) {
-    
     if (argc != PARAMS_AMOUNT) {
         printf("Uso: ./tp <workersfile> <mapfile>\n");
     	return ERROR;
     }
 
-	WorkersParser workers_parser(argv[WORKERS_FILE]);
-    MapParser map_parser(argv[MAP_FILE]);
-    BlockingQueue farmers_queue, miners_queue, woodcutters_queue;
-    std::vector<std::thread> collectors, producers;
-    Inventory inventory;
-    Score score;
-
-    workers_parser.run_workers(collectors, producers, farmers_queue, 
-        miners_queue, woodcutters_queue, inventory, score);
-    map_parser.fill_queues(farmers_queue, miners_queue, woodcutters_queue);
-    workers_parser.join_collectors(collectors);
-    inventory.deactivate();
-    workers_parser.join_producers(producers);
-    
-    inventory.print_map();
-    score.print_score();
+    Orchestrator orchestrator;
+    orchestrator.run(argv[WORKERS_FILE], argv[MAP_FILE]);
 	return SUCCESS;
 }

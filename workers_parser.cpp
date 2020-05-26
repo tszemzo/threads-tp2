@@ -31,7 +31,7 @@ std::map<std::string, int> WorkersParser::map_line() {
 }
 
 void WorkersParser::run_workers(std::vector<std::thread> &collectors,
-    std::vector<std::thread> &producers, 
+    std::vector<ProducerThread*> &producers, 
     BlockingQueue &farmers_queue,
     BlockingQueue &miners_queue, 
     BlockingQueue &woodcutters_queue,
@@ -55,31 +55,19 @@ void WorkersParser::run_workers(std::vector<std::thread> &collectors,
         });
     }
     for (int i = 0; i < map_of_workers["Cocineros"]; i++) {
-        producers.push_back(std::thread { 
-            Chef(inventory, score)
-        });
+        ProducerThread *t = new Chef(inventory, score);
+        t->start();
+        producers.push_back(t);
     }
     for (int i = 0; i < map_of_workers["Carpinteros"]; i++) {
-        producers.push_back(std::thread { 
-            Carpenter(inventory, score)
-        });
+        ProducerThread *t = new Carpenter(inventory, score);
+        t->start();
+        producers.push_back(t);
     }
     for (int i = 0; i < map_of_workers["Armeros"]; i++) {
-        producers.push_back(std::thread { 
-            Gunsmith(inventory, score)
-        });
-    }
-}
-
-void WorkersParser::join_collectors(std::vector<std::thread> &collectors) {
-    for (unsigned int i = 0; i < collectors.size(); ++i) {
-        collectors[i].join();
-    }
-}
-
-void WorkersParser::join_producers(std::vector<std::thread> &producers) {
-    for (unsigned int i = 0; i < producers.size(); ++i) {
-        producers[i].join();
+        ProducerThread *t = new Gunsmith(inventory, score);
+        t->start();
+        producers.push_back(t);
     }
 }
 

@@ -7,9 +7,11 @@
 #define WORK_TIME 60
 #define COAL_AMOUNT 2
 #define IRON_AMOUNT 2
+#define COAL 'C'
+#define IRON 'H'
 #define BENEFIT_POINTS 3
 
-void Gunsmith::operator()() {
+void Gunsmith::run() {
     // std::cout << "Gunsmith running" << '\n';
     while (true) {
         try {
@@ -23,8 +25,8 @@ void Gunsmith::operator()() {
 
 void Gunsmith::produce() {
     std::map<char, int> recipe;
-    recipe['C'] = COAL_AMOUNT;
-    recipe['H'] = IRON_AMOUNT;
+    recipe[COAL] = COAL_AMOUNT;
+    recipe[IRON] = IRON_AMOUNT;
     inventory.remove(recipe);
     score.add(BENEFIT_POINTS);
 }
