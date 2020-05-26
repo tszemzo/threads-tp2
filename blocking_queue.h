@@ -22,8 +22,6 @@ public:
 
     char pop();
 
-    size_t size();
-
     void close();
 
     ~BlockingQueue() {}

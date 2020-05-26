@@ -17,17 +17,7 @@
 #define MAP_FILE 2
 
 int main(int argc, const char *argv[]) {
-    // Primero parseas el workers file creando los workers correspondientes
-    // Que basically son threads, y los puedo almacenar en un vector de threads
-    // Luego, vamos a spawnear a los trabajadores
-    // Segundo parseo el mapa y los voy asignando a sus colas bloqueantes
-    // A medida que voy leyendo el mapa en main una por cada tipo de worker
-    // Y aca va a haber que proteger al inventario porque es shared
-    // Tanto por los producers como los consumers.
-    // Ademas setearemos una condition variable q no le permita a los consumers
-    // Consumir, hasta que tenga los recursos que necesita para sumar 1 pto.
-    // Segun la recomendacion hay q usar una sola condition variable.
-
+    
     if (argc != PARAMS_AMOUNT) {
         printf("Uso: ./tp <workersfile> <mapfile>\n");
     	return ERROR;

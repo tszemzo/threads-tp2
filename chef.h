@@ -4,13 +4,12 @@
 #include <iostream>
 #include <string>
 #include <mutex>
-#include "thread.h"
+#include "producer_thread.h"
 #include "inventory.h"
 #include "score.h"
 
-/*Clase que representa a una memoria cache directa. Hereda de la clase
-Cache.*/
-class Chef {
+/*Clase que representa a un Chef.*/
+class Chef : public ProducerThread {
 	private:
 		Inventory &inventory;
 		Score &score;

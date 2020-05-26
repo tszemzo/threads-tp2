@@ -21,10 +21,6 @@ char BlockingQueue::pop() {
     return t;
 }
 
-size_t BlockingQueue::size(){
-    return queue.size();
-}
-
 void BlockingQueue::close() {
     std::unique_lock<std::mutex> lk(m);
     isClosed = true;

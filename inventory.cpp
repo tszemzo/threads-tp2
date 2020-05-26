@@ -76,5 +76,4 @@ void Inventory::print_map() {
     std::cout << '\n';
 }
 
-Inventory::~Inventory() {
-}
+Inventory::~Inventory() {}
