@@ -14,13 +14,16 @@ class Collector {
 		Inventory &inventory;
 
 	public:
-		/*Constructor de la clase.*/
+		/* Constructor de la clase.*/
 		Collector(BlockingQueue &queue, Inventory &inventory) : 
             queue(queue), inventory(inventory) {}
 
+		/* Sobrecarga del operador ().
+		 * Intenta trabajar y llevar al inventario un recurso
+		 */
 		void operator()();
 
-		/*Destructor virtual de la clase.*/
+		/* Destructor de la clase.*/
 		~Collector();
 };
 

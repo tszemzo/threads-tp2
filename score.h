@@ -4,19 +4,20 @@
 #include <mutex>
 #include <iostream>
 
-/*Clase que lee el archivo del mapa cuando se inicia el programa.*/
+/*Clase que modela el tanteador del programa.*/
 class Score {
 private:
     int score;
     std::mutex m;
 
 public:
-    /*Crea el tanteador asignandole el archivo abierto 
-    (se usa char *file para ello) como atribut.*/
+    /*Constructor del tanteador.*/
     Score();
 
+    /*Crea "points" puntos al tanteador*/
     bool add(int points);
 
+    /*Imprime por pantalla los puntos del tanteador*/
     void print_score();
 
     /*Destructor del objeto.*/

@@ -33,6 +33,6 @@ void Orchestrator::join_producers(std::vector<ProducerThread*> &producers) {
 }
 
 void Orchestrator::print_results(Inventory &inventory, Score &score) {
-    inventory.print_map();
+    inventory.print_inventory();
     score.print_score();
 }

@@ -5,7 +5,7 @@
 #include <fstream>
 #include "blocking_queue.h"
 
-/*Clase que lee el archivo del mapa cuando se inicia el programa.*/
+/*Clase que parsea el archivo del mapa cuando se inicia el programa.*/
 class MapParser {
 private:
     std::fstream map_file;
@@ -16,7 +16,7 @@ public:
     (se usa char *file para ello) como atributo.*/
     explicit MapParser(const char* filename);
 
-     /*Llena las colas bloqueantes con los recursos obtenidos del archivo.*/
+    /*Llena las colas bloqueantes con los recursos obtenidos del archivo.*/
     void fill_queues(BlockingQueue &farmers_queue, 
                      BlockingQueue &miners_queue,
                      BlockingQueue &woodcutters_queue);

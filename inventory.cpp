@@ -69,7 +69,7 @@ void Inventory::deactivate() {
     cv.notify_all();
 }
 
-void Inventory::print_map() {
+void Inventory::print_inventory() {
     std::cout << "Recursos restantes:" << '\n';
     std::cout << "  - Trigo: " << resources[WHEAT] << '\n';
     std::cout << "  - Madera: " << resources[WOODS] << '\n';

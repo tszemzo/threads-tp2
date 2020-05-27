@@ -27,7 +27,6 @@ public:
     (se usa char *file para ello) como atributo.*/
     explicit WorkersParser(const char* filename);
 
-    /*.*/
     void run_workers(std::vector<std::thread> &collectors,
         std::vector<ProducerThread*> &producers, 
         BlockingQueue &farmers_queue,
@@ -35,10 +34,6 @@ public:
         BlockingQueue &woodcutters_queue,
         Inventory &inventory,
         Score &score);
-
-    void join_collectors(std::vector<std::thread> &collectors);
-
-    void join_producers(std::vector<ProducerThread*> &producers);
 
     /*Parsea las lineas del archivo a un mapa con cada worker y su cantidad.*/
     std::map<std::string, int> map_line();

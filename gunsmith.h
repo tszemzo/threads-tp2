@@ -8,7 +8,11 @@
 #include "inventory.h"
 #include "score.h"
 
-/*Clase que representa a un armero.*/
+/* Clase que representa a un armero del modelo
+ * Esta implementado heredando de ProducerThread
+ * Por lo que es un objeto "vivo" que tiene sus atributos 
+ * y su logica (una tarea) pero que vive en su propio hilo
+ */
 class Gunsmith : public ProducerThread {
 	private:
 		Inventory &inventory;
@@ -19,11 +23,13 @@ class Gunsmith : public ProducerThread {
 		Gunsmith(Inventory &inventory, Score &score) : 
 			inventory(inventory), score(score) {}
 
+		/*Corre al hilo en cuestion*/
 		void run() override;
 
+		/*Intenta producir recursos en puntos de beneficio.*/
 		void produce();
 
-		/*Destructor virtual de la clase.*/
+		/*Destructor de la clase.*/
 		~Gunsmith();
 };
 
